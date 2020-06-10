@@ -1,13 +1,15 @@
 import bcrypt
+import json
+
 from flask import Flask, render_template, request, session, url_for, redirect, g
+from utils.users_services import current_users_list, create_user_func, validate_login
+from utils.projects_services import create_task
 
-from utils.manage_users import current_users_list, create_user_func
-
-app = Flask(__name__)
+app = Flask(__name__) 
 app.secret_key = 'somesecretkey'
 
 @app.before_request
-def before_request():
+def before_request(): # check for logged user/any open session
     g.user = None
     if 'user_id' in session:
         users_list = current_users_list()
@@ -15,54 +17,55 @@ def before_request():
         g.user = user
 
 @app.route('/')
-def main_page():
+def main_page(): # redirect main page to just login
     return redirect(url_for('login_page'))
 
 @app.route('/login', methods = ['GET', 'POST'])
-def login_page():
-    if request.method == 'POST':
-        session.pop('user_id', None)
-        username = request.form['username']
-        password = request.form['password'].encode('utf-8')
-        try:
-            users_list = current_users_list()
-            user = [x for x in users_list if x['username'] == username][0]
-            user_password = bytes(user['password'], encoding='utf-8')
-            if bcrypt.checkpw(password, user_password):
-                session['user_id'] = user['user_id']
-                return redirect(url_for('user_dashboard'))
-        except:
-            pass
-    return render_template('login.html')
+def login_page(): 
+    if request.method == 'POST': 
+        session.pop('user_id', None) #end any current session
+        username = request.form['username'] #get username
+        password = request.form['password'].encode('utf-8') # get password and convert to bytes
+        check, user = validate_login(username, password)
+        if check == True:
+            session['user_id'] = user['user_id'] # set session to user id
+            return redirect(url_for('user_dashboard')) #redirect to user dashboard
+        else:
+            pass #if anything fails refresh page
+    return render_template('login.html') 
 
 @app.route('/create_user', methods = ['GET', 'POST'])
-def new_user_page():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password'].encode('utf-8')
-        password_re = request.form['password_re'].encode('utf-8')
-        if password == password_re:
-            users_list = current_users_list()
-            users = [x for x in users_list if x['username'] == username]
-            for u in users:
-                if username == u['username']:
-                    return f'{username} already exists.'
-            password_hash = bcrypt.hashpw(password, bcrypt.gensalt())
-            
-            create_user_func(len(users_list),username,password_hash.decode('utf-8'))
-            return redirect(url_for('login_page'))
-        else:
-            return "Passwords don't match."
+def new_user_page(): 
+    if request.method == 'POST': 
+        username = request.form['username'] # new username
+        password = request.form['password'] #new password
+        password_re = request.form['password_re'] #repeat password
+        create_user_func(username, password, password_re) # call create user function and add user to database
+        return redirect(url_for('login_page')) # redirect to login page
     return render_template('create_user.html')
 
 
-@app.route('/user_dashboard')
+@app.route('/user_dashboard', methods = ['GET', 'POST'])
 def user_dashboard():
-    if not g.user:
+    if not g.user: # if there isnt any session present redirect to login
         return redirect(url_for('login_page'))
+    if request.method == 'POST':
+        new_task = request.form['add_task']
+        project = request.form['ph']
+        create_task(project, new_task)
+    with open ('database/projects.json', 'r') as add_new_project: # list all projects 
+        projects = json.load(add_new_project)
+        projects = projects['projects']
 
-    return render_template('user_dashboard.html')
+    return render_template('user_dashboard.jinja2', projects=projects)
 
+@app.route('/add', methods = ['POST'])
+def add_new_task():
+    pass
+
+    
 if __name__ == '__main__':
     app.run(debug=True)
+
+
 
