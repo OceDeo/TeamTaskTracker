@@ -1,0 +1,130 @@
+body{
+    font-family: 'Roboto', sans-serif;
+    background:rgb(217, 221, 228);
+  }
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    outline: transparent;
+  }
+    
+
+.side_panel{
+    height: 100%; 
+    width: 180px;
+    position: fixed; 
+    background: rgb(20, 139, 194);
+    z-index: 99;
+  }
+
+.side_panel h1{
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    background: rgb(17, 123, 172);
+    font-size: 16px;
+    user-select: none;
+    
+  }
+
+.side_panel ul a{
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding-left: 15px;
+    display: block;
+    line-height: 50px;
+    color: white;
+    font-size: 14px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255,255,255,.1);
+    transition: .2s;
+  }
+
+.side_panel i{
+    font-style: normal;
+  }
+
+.side_panel li:hover a{
+    padding-left: 25px;
+    color: rgb(172, 204, 240);
+  }
+
+
+
+.proj_name{
+    position: fixed;
+    line-height: 58px;
+    width: 100%;
+    left: 180px;
+    background:linear-gradient(-90deg, rgb(55, 163, 212),rgb(20, 139, 194)) ;
+}
+
+.proj_name i{
+    position: relative;
+    color: white;
+    left: 20px;
+    font-style: normal;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.project_all {
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+    top: 100px;
+    left: 220px;
+    right: 40px;
+    border-radius: 10px;
+    border: 1px solid rgb(187, 187, 187);
+}
+
+h2{
+  text-transform: uppercase;
+}
+
+input{
+  position: relative;
+  width: 100%;
+  padding-top: 25px;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-bottom: 10px;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid rgb(211, 211, 211)
+}
+
+.add_task_button{
+  position: relative;
+  width: 100px;
+  height: 40px;
+  background-color: #2FD4AE;
+  color: rgb(83, 83, 83);
+  box-shadow: none;
+  outline: none;
+  border: 0;
+  border-radius: 40px;
+}
+
+.tasks{
+  margin-top: 10px;
+  box-sizing: border-box;
+
+  width: 100%;
+}
+
+.tasks_list li:nth-child(odd){
+  background: linear-gradient(90deg, rgb(230, 249, 255), rgb(238, 251, 255));
+}
+
+.tasks .task{
+  padding: 10px;
+  line-height: 50px;
+  font-style: normal;
+  color: black;
+}

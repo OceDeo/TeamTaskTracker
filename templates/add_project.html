@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add project</title>
+</head>
+<body>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_add_project.css') }}">
+    </head>
+        <body> 
+            <div class="side_panel">
+                <h1>Logged-in as {{g.user.username}}</h1>
+                <ul>
+                    <li><a href="#"><i class="menu_opt">Dashboard</i></a></li>
+                    <li><a href="/myprojects"><i class="menu_opt">My Projects</i></a></li>
+                    <li><a href="/add_project"><i class="menu_opt">Create Project</i></a></li>
+                    <li><a href="#"><i class="menu_opt">PlaceHolder#3</i></a></li>
+                </ul>
+            </div>
+    <div class="add_project">
+        <form method="POST">
+            <input type="text" name="project_name" placeholder="project name">
+            <input type="date" name="start_date" placeholder="start-date dd/mm/yyyy">
+            <input type="date" name="deadline" placeholder="deadline dd/mm/yyyy">
+            <input class="submit_button" type="submit" name="create project" value="create new project">
+        </form>
+    </div>
+</body>
+</html>

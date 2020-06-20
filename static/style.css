@@ -1,7 +1,7 @@
 body{
     margin: 0;
     padding: 0;
-    font-family: Helvetica;
+    font-family: 'Roboto', sans-serif;
     background:linear-gradient(0deg, #61C0D4, #2FA0D4) ;
 }
 
@@ -52,10 +52,8 @@ body{
     height: 40px;
     background-color: #2FD4AE;
     color: rgb(83, 83, 83);
-
     box-shadow: none;
     outline: none;
     border: 0;
     border-radius: 40px;
-
 }

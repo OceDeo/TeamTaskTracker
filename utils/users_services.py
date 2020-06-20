@@ -1,4 +1,4 @@
-from database.json_services import json_add_user, current_users_list
+from database.json_services import json_add_user, current_users_list, current_proj_list
 import bcrypt
 
 def create_user_func(username, password, password_re):
@@ -26,3 +26,13 @@ def validate_login(username, password):
             return True, user
     except:
         pass
+
+def proj_user(user_id):
+    projects = current_proj_list()
+    user_projects = []
+    for project in projects:
+        if user_id in project['users']:
+            user_projects.append(project)
+        else:
+            pass
+    return user_projects
