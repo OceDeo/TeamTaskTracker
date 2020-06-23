@@ -1,0 +1,6 @@
+{% for task in proj_tasks %}
+    <li>
+        <a href="#"><i class="task">{{task.task}}</i></a>
+        <button data-id='{{task.id}}' onclick='deleteTask(event)' class='delete_task'>DELETE</button>
+    </li>
+{% endfor %}

@@ -8,6 +8,10 @@ pylint = "*"
 
 [packages]
 flask = "*"
+psycopg2 = "*"
+flask-sqlalchemy = "*"
+psycopg2-binary = "*"
+pgadmin4 = {path = "./pgadmin4-4.22-py3-none-any.whl"}
 
 [requires]
 python_version = "3.8"

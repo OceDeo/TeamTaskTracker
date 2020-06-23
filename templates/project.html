@@ -1,36 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_project.css') }}">
     <title>{{project.project_name}}</title>
 </head>
-    <body>
 
-        <div class="side_panel">
-            <h1>Logged-in as {{g.user.username}}</h1>
-            <ul>
-                <li><a href="/user_dashboard"><i class="menu_opt">Dashboard</i></a></li>
-                <li><a href="/myprojects"><i class="menu_opt">My Projects</i></a></li>
-                <li><a href="/add_project"><i class="menu_opt">Create Project</i></a></li>
+<body>
+    <div class="side_panel">
+        <h1>Logged-in as {{g.user.username}}</h1>
+        <ul>
+            <li><a href="/user_dashboard"><i class="menu_opt">Dashboard</i></a></li>
+            <li><a href="/myprojects"><i class="menu_opt">My Projects</i></a></li>
+            <li><a href="/add_project"><i class="menu_opt">Create Project</i></a></li>
+        </ul>
+    </div>
+    <div class="proj_name"><i>{{project.project_name}}</i></div>
+    <div class="project_all">
+        <h2>current tasks</h2>
+        <div class="add_new_task">
+            <!--            <form method="POST">
+                    <input type="text" name="add_task" placeholder="new task"/>
+                    <button id="add_task_btn" class="add_task_button">add task</button>
+                </form> -->
+            <input id="new_task_id" type="text" name="add_task" placeholder="new task" />
+            <button id="add_task_btn" class="add_task_button">add task</button>
+        </div>
+        <div class="tasks">
+            <ul class="tasks_list">
+                {% include 'task_list.jinja2' %}
             </ul>
         </div>
-        <div class="proj_name"><i>{{project.project_name}}</i></div>
-        <div class="project_all">
-            <h2>current tasks</h2>
-            <div class="add_new_task">
-                <form method="POST">
-                    <input type="text" name="add_task" placeholder="new task"/>
-                    <button class="add_task_button">add task</button>
-                </form>
-            </div>
-            <div class="tasks">
-                <ul class="tasks_list">
-                    {% for task in project.tasks %}
-                        <li><a href="#"><i class="task">{{task}}</i></a></li>
-                    {% endfor %}
-                </ul>
-            </div>
-    </body>
+        <script>
+            let btn = document.getElementById("add_task_btn");
+            btn.addEventListener("click", function () {
+                let taskName = document.getElementById("new_task_id").value;
+                fetch("/api/projects/{{project.id}}/add_task",
+                    {
+                        method: "POST",
+                        body: JSON.stringify({name: taskName}),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(reponse => reponse.text())
+                    .then(text => { 
+                        document.querySelector('.tasks_list').innerHTML = text;
+                    })
+            })
+
+            function deleteTask(ev) {
+                let target = ev.target;
+                fetch("/api/projects/{{project.id}}/delete_task",
+                    {
+                        method: "POST",
+                        body: JSON.stringify({id: target.dataset.id}),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(reponse => reponse.text())
+                    .then(text => { 
+                        document.querySelector('.tasks_list').innerHTML = text;
+                    })
+            }
+
+        </script>
+</body>
+
 </html>
