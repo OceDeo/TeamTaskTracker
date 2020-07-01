@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 </html>
     <head>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_userdashboard.css') }}">
+         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_userdashboard.css') }}"> 
     </head>
         <body> 
             <div class="side_panel">
                 <h1>Logged-in as {{g.user.username}}</h1>
                 <ul>
-                    <li><a href="#"><i class="menu_opt">Dashboard</i></a></li>
+                    <li><a href="/user_dashboard"><i class="menu_opt">Dashboard</i></a></li>
                     <li><a href="/myprojects"><i class="menu_opt">My Projects</i></a></li>
                     <li><a href="/add_project"><i class="menu_opt">Create Project</i></a></li>
-                    <li><a href="#"><i class="menu_opt">PlaceHolder#3</i></a></li>
+                    <li><a href="/create_user"><i class="menu_opt">{{create_user}}</i></a></li>
+                    <li><a href="/logout"><i class="menu_opt">Logout</i></a></li>
                 </ul>
             </div>
             <div class="projects_all">
                 <ul class="main_list">
                     {% for project in projects %}
-                    <li><a href="user_dashboard/{{project.id}}"><i class="proj_name">{{project.project_name}}</i>
-                    <br>
-                    <i class="proj_info">Start date: {{project.start_date}}
-                    <br>Deadline: {{project.deadline}}
-                    </i></a></li>
+                        <li><a href="user_dashboard/{{project.id}}"><i class="proj_name">{{project.project_name}}</i>
+                        <br>
+                        <i class="proj_info">Start date: {{project.start_date}}
+                        <br>Deadline: {{project.deadline}}
+                        </i></a></li>
                     {% endfor %}
                 </ul>
             </div>
+            <div class="tasks_details">
+                <ul class="secondary_list">
+                    {% for details in tasks_details %}
+                        <li><a class="task_details"><i class="nums">{{details}} TASKS COMPLETED</i></a></li>
+                    {% endfor %}
+                </ul>    
+            </div>
+
         </body>
 </html>

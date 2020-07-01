@@ -114,17 +114,50 @@ input{
 .tasks{
   margin-top: 10px;
   box-sizing: border-box;
-
+  cursor: pointer;
   width: 100%;
 }
 
-.tasks_list li:nth-child(odd){
-  background: linear-gradient(90deg, rgb(230, 249, 255), rgb(238, 251, 255));
+.task{
+  border-bottom: 1px solid rgb(238, 238, 238)
 }
 
-.tasks .task{
+.tasks .True{
+  padding: 10px;
+  line-height: 50px;
+  font-style: normal;
+  color: rgb(92, 92, 92);
+  text-decoration: line-through;
+  transition: .2s;
+}
+
+.tasks .False{
   padding: 10px;
   line-height: 50px;
   font-style: normal;
   color: black;
+}
+
+.tasks .task:hover{
+  background: rgb(213, 245, 255);
+  transition: .2s;
+}
+
+.delete_task{
+  position: fixed;
+  width: 100px;
+  right: 100px;
+  margin-top: 11px;
+  height: 30px;
+  background-color: #2FD4AE;
+  color: rgb(83, 83, 83);
+  box-shadow: none;
+  outline: none;
+  border: 0;
+  border-radius: 40px;
+  transition: .2s;
+}
+
+.delete_task:hover{
+  background-color: rgb(68, 226, 189);
 }

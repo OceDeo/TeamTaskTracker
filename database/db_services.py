@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
+from sqlalchemy import desc
 
 app = Flask(__name__) 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:z6014367@localhost/TTT'
@@ -21,16 +22,18 @@ class Users(db.Model):  # works
     def __repr__(self):
         return f'{self.id},{self.username},{self.password}'
 
-def add_user(username, password):
-    user = Users(username, password)
-    db.session.add(user)
-    db.session.commit()
-    
-def user_exists_check(new_username):
-    if db.session.query(Users).filter(Users.username == new_username).count() == 0:
-        pass
-    else:
-        return False
+
+class UserRepository:
+    def add_user(username, password):
+        user = Users(username, password)
+        db.session.add(user)
+        db.session.commit()
+        
+    def user_exists_check(new_username):
+        if db.session.query(Users).filter(Users.username == new_username).count() == 0:
+            pass
+        else:
+            return False
 
                         ##### PROJECTS #####
 
@@ -51,53 +54,54 @@ class Projects(db.Model): #works
     def __repr__(self):
         return f'{self.project_name}, {self.users}, {self.start_date}, {self.deadline}'
 
-def create_project(project_name, user, start_date, deadline): # WORKS
-    project = Projects(project_name, user, start_date, deadline)
-    db.session.add(project)
-    db.session.commit()
 
-def add_user_to_project(project_id, user_id): # WORKS
-    project = Projects.query.filter_by(id = project_id).first()
-    users_list = project.users.split(',')
-    if str(user_id) in users_list:
-        return None
-    else:
-        project.users += f',{user_id}'
+class ProjectRepository:
+    def create_project(project_name, user, start_date, deadline): # WORKS
+        project = Projects(project_name, user, start_date, deadline)
         db.session.add(project)
         db.session.commit()
 
-def remove_user_from_project(project_id, user_id):
-    project = Projects.query.filter_by(id = project_id).first()
-    users_list = project.users.split(',')
-    if str(user_id) in users_list:
-        print(users_list)
-        users_list.remove(f'{user_id}')
-        users = ','.join(users_list)
-        project.users = users
+    def add_user_to_project(project_id, user_id): # WORKS
+        project = Projects.query.filter_by(id = project_id).first()
+        users_list = project.users.split(',')
+        if str(user_id) in users_list:
+            return None
+        else:
+            project.users += f',{user_id}'
+            db.session.add(project)
+            db.session.commit()
+
+    def remove_user_from_project(project_id, user_id):
+        project = Projects.query.filter_by(id = project_id).first()
+        users_list = project.users.split(',')
+        if str(user_id) in users_list:
+            print(users_list)
+            users_list.remove(f'{user_id}')
+            users = ','.join(users_list)
+            project.users = users
+            db.session.add(project)
+            db.session.commit()
+        else:
+            return None
+
+    def fetch_project(project_id):
+        project = Projects.query.filter_by(id = project_id).first()
+        return project
+
+    def user_projects(user_id):
+        projects = Projects.query.filter(Projects.users.contains(str(user_id))).all()
+        return projects
+
+    def edit_project(project_id, project_name, start_date, deadline):
+        project = Projects.query.filter_by(id = project_id).first()
+        if project_name != None:
+            project.project_name = project_name
+        if start_date != None:
+            project.start_date = start_date
+        if deadline != None:
+            project.deadline = deadline
         db.session.add(project)
         db.session.commit()
-    else:
-        return None
-
-def fetch_project(project_id):
-    project = Projects.query.filter_by(id = project_id).first()
-    return project
-
-def user_projects(user_id):
-    projects = Projects.query.filter(Projects.users.contains(str(user_id))).all()
-    return projects
-
-
-def edit_project(project_id, project_name, start_date, deadline):
-    project = Projects.query.filter_by(id = project_id).first()
-    if project_name != None:
-        project.project_name = project_name
-    if start_date != None:
-        project.start_date = start_date
-    if deadline != None:
-        project.deadline = deadline
-    db.session.add(project)
-    db.session.commit()
 
                         ##### TASKS #####
 
@@ -114,7 +118,7 @@ class Tasks(db.Model): # works
         self.task_status = task_status
 
     def __repr__(self):
-        return f'{self.project} | {self.task} | {self.task_status}'
+        return f'<<{self.project} | {self.task} | {self.task_status}>>'
 
 
 class TaskRepository:
@@ -125,18 +129,15 @@ class TaskRepository:
         return task
 
     def task_status(task_id): # works
-        task = Tasks.query.filter_by(id=task_id).first()
+        task = Tasks.query.get(task_id)
         task.task_status = (not task.task_status)
-        db.session.add(task)
         db.session.commit()
 
     def tasks_project(project_id):
-        return Tasks.query.filter_by(project=str(project_id)).all()
+        return Tasks.query.filter(Tasks.project.contains(str(project_id))).order_by(desc(Tasks.id)).all()
 
     def delete_task(task_id):
         task = Tasks.query.filter_by(id=task_id).first()
         db.session.delete(task)
         db.session.commit()
-
-
 

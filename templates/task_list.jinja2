@@ -1,6 +1,9 @@
+<div class="all_tasks">
 {% for task in proj_tasks %}
-    <li>
-        <a href="#"><i class="task">{{task.task}}</i></a>
-        <button data-id='{{task.id}}' onclick='deleteTask(event)' class='delete_task'>DELETE</button>
+    <button data-id='{{task.id}}' onclick='deleteTask(event)' class='delete_task'>DELETE</button>
+    <li class="task" data-id='{{task.id}}' onclick="status_task(event)">
+        <a data-id='{{task.id}}' class="{{task.task_status}}">{{task.task}}</a>
     </li>
 {% endfor %}
+</div>
+

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_edit_project.css') }}">
+    <title>edit {{project.project_name}}</title>
+</head>
+
+<body>
+    <div class="side_panel">
+        <h1>Logged-in as {{g.user.username}}</h1>
+        <ul>
+            <li><a href="/user_dashboard"><i class="menu_opt">Dashboard</i></a></li>
+            <li><a href="/myprojects"><i class="menu_opt">My Projects</i></a></li>
+            <li><a href="/add_project"><i class="menu_opt">Create Project</i></a></li>
+            <li><a href="/create_user"><i class="menu_opt">{{create_user}}</i></a></li>
+            <li><a href="/logout"><i class="menu_opt">Logout</i></a></li>
+        </ul>
+    </div>
+    <div class="proj_name"><i>{{project.project_name}} - {{project.start_date}} - {{project.deadline}}</i></div>
+    <div class="edit_fields">
+        <form method="POST">
+            <input type="text" name="project_name" placeholder="project name">
+            <input type="date" name="start_date" placeholder="start-date dd/mm/yyyy">
+            <input type="date" name="deadline" placeholder="deadline dd/mm/yyyy">
+            <input class="submit_button" type="submit" name="edit_project" value="save changes">
+            <a class="error_msg">{{fields}}</a>
+        </form>
+    </div>
+    </div>
+</body>
+
+</html>

@@ -15,16 +15,14 @@
             <li><a href="/user_dashboard"><i class="menu_opt">Dashboard</i></a></li>
             <li><a href="/myprojects"><i class="menu_opt">My Projects</i></a></li>
             <li><a href="/add_project"><i class="menu_opt">Create Project</i></a></li>
+            <li><a href="/create_user"><i class="menu_opt">{{create_user}}</i></a></li>
+            <li><a href="/logout"><i class="menu_opt">Logout</i></a></li>
         </ul>
     </div>
-    <div class="proj_name"><i>{{project.project_name}}</i></div>
+    <div class="proj_name"><i class="tasks_info">{% include 'tasks_info.jinja2' %}</i><i> tasks completed // {{project.project_name}} // {{project.start_date}} - {{project.deadline}}</i></div>
     <div class="project_all">
         <h2>current tasks</h2>
         <div class="add_new_task">
-            <!--            <form method="POST">
-                    <input type="text" name="add_task" placeholder="new task"/>
-                    <button id="add_task_btn" class="add_task_button">add task</button>
-                </form> -->
             <input id="new_task_id" type="text" name="add_task" placeholder="new task" />
             <button id="add_task_btn" class="add_task_button">add task</button>
         </div>
@@ -36,6 +34,13 @@
         <script>
             let btn = document.getElementById("add_task_btn");
             btn.addEventListener("click", function () {
+
+                fetch("/api/projects/{{project.id}}/info_tasks")
+                .then(reponse => reponse.text())
+                .then(text => { 
+                    document.querySelector('.tasks_info').innerHTML = text;
+                })
+
                 let taskName = document.getElementById("new_task_id").value;
                 fetch("/api/projects/{{project.id}}/add_task",
                     {
@@ -46,12 +51,54 @@
                         }
                     })
                     .then(reponse => reponse.text())
+                    .then(text => {
+                        document.querySelector('.tasks_list').innerHTML = text;
+                    })
+                let field = document.getElementById("new_task_id").value = ''
+
+
+
+
+            })
+            
+            function status_task(ev) {
+
+
+                fetch("/api/projects/{{project.id}}/info_tasks")
+                .then(reponse => reponse.text())
+                .then(text => { 
+                    document.querySelector('.tasks_info').innerHTML = text;
+                })
+
+
+                let target = ev.target;
+
+                fetch("/api/projects/{{project.id}}/status_task",
+                    {
+                        method: "POST",
+                        body: JSON.stringify({id: target.dataset.id}),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(reponse => reponse.text())
                     .then(text => { 
                         document.querySelector('.tasks_list').innerHTML = text;
                     })
-            })
+
+
+
+                }
 
             function deleteTask(ev) {
+
+                fetch("/api/projects/{{project.id}}/info_tasks")
+                .then(reponse => reponse.text())
+                .then(text => { 
+                    document.querySelector('.tasks_info').innerHTML = text;
+                })
+
+
                 let target = ev.target;
                 fetch("/api/projects/{{project.id}}/delete_task",
                     {
@@ -65,7 +112,17 @@
                     .then(text => { 
                         document.querySelector('.tasks_list').innerHTML = text;
                     })
-            }
+                
+
+
+                }
+
+        
+    document.querySelector("#new_task_id").addEventListener("keyup", event => {
+    if(event.key !== "Enter") return;
+    document.querySelector("#add_task_btn").click(); 
+    event.preventDefault(); 
+});
 
         </script>
 </body>

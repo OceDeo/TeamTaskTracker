@@ -13,10 +13,11 @@
             <div class="side_panel">
                 <h1>Logged-in as {{g.user.username}}</h1>
                 <ul>
-                    <li><a href="#"><i class="menu_opt">Dashboard</i></a></li>
+                    <li><a href="/user_dashboard"><i class="menu_opt">Dashboard</i></a></li>
                     <li><a href="/myprojects"><i class="menu_opt">My Projects</i></a></li>
                     <li><a href="/add_project"><i class="menu_opt">Create Project</i></a></li>
-                    <li><a href="#"><i class="menu_opt">PlaceHolder#3</i></a></li>
+                    <li><a href="/create_user"><i class="menu_opt">{{create_user}}</i></a></li>
+                    <li><a href="/logout"><i class="menu_opt">Logout</i></a></li>
                 </ul>
             </div>
     <div class="add_project">
@@ -25,6 +26,7 @@
             <input type="date" name="start_date" placeholder="start-date dd/mm/yyyy">
             <input type="date" name="deadline" placeholder="deadline dd/mm/yyyy">
             <input class="submit_button" type="submit" name="create project" value="create new project">
+            <a class="error_msg">{{fields}}</a>
         </form>
     </div>
 </body>

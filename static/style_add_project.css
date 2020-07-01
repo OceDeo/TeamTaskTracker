@@ -92,3 +92,10 @@ form input{
     border: 0;
     border-radius: 40px;
 }
+
+.error_msg{
+  position: relative;
+  color: red;
+  left: 25px;
+  font-size: 15px;
+}

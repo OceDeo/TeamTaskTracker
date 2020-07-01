@@ -7,10 +7,10 @@ def create_user_func(username, password, password_re):
 
     if password == password_re: # check if passwords match
         password_hash = bcrypt.hashpw(password, bcrypt.gensalt()) # hash the password
-        dbs.user_exists_check(username)
+        dbs.UserRepository.user_exists_check(username)
     else:
         return "Passwords don't match."
-    dbs.add_user(username, password_hash.decode('utf-8'))
+    dbs.UserRepository.add_user(username, password_hash.decode('utf-8'))
 
 def validate_login(username, password):
     try:
@@ -24,7 +24,7 @@ def validate_login(username, password):
         pass
 
 def proj_user(user_id):
-    return dbs.user_projects(user_id)
+    return dbs.ProjectRepository.user_projects(user_id)
 
 def user_by_id(session_id):
     return dbs.Users.query.filter_by(id=session_id).first()

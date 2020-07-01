@@ -57,3 +57,10 @@ body{
     border: 0;
     border-radius: 40px;
 }
+
+a{
+    position: relative;
+    color: red;
+    left: 25px;
+    font-size: 15px;
+}
