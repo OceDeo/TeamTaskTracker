@@ -60,6 +60,7 @@ body{
     width: 100%;
     left: 180px;
     background:linear-gradient(-90deg, rgb(55, 163, 212),rgb(20, 139, 194)) ;
+    z-index: 999;
 }
 
 .proj_name i{
@@ -70,6 +71,7 @@ body{
     font-size: 20px;
     text-transform: uppercase;
     font-weight: bold;
+     z-index: 999;
 }
 
 .project_all {
@@ -81,6 +83,7 @@ body{
     right: 40px;
     border-radius: 10px;
     border: 1px solid rgb(187, 187, 187);
+    z-index: 99;
 }
 
 h2{
@@ -102,6 +105,7 @@ input{
 .add_task_button{
   position: relative;
   width: 100px;
+  cursor: pointer;
   height: 40px;
   background-color: #2FD4AE;
   color: rgb(83, 83, 83);
@@ -109,6 +113,11 @@ input{
   outline: none;
   border: 0;
   border-radius: 40px;
+  transition: .2s;
+}
+
+.add_task_button:hover{
+  background-color: rgb(68, 226, 189);
 }
 
 .tasks{
@@ -119,7 +128,7 @@ input{
 }
 
 .task{
-  border-bottom: 1px solid rgb(238, 238, 238)
+  border-bottom: 1px solid rgb(238, 238, 238);
 }
 
 .tasks .True{
@@ -143,11 +152,17 @@ input{
   transition: .2s;
 }
 
+.del_div{
+  position: relative;
+  float: right;
+  right: 25px;
+  top: -40px;
+}
+
 .delete_task{
-  position: fixed;
+  cursor: pointer;
   width: 100px;
-  right: 100px;
-  margin-top: 11px;
+  left: 50%;
   height: 30px;
   background-color: #2FD4AE;
   color: rgb(83, 83, 83);
@@ -159,5 +174,24 @@ input{
 }
 
 .delete_task:hover{
+  background-color: rgb(68, 226, 189);
+}
+
+.edit_project_button{
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  height: 30px;
+  background-color: #2FD4AE;
+  color: rgb(83, 83, 83);
+  box-shadow: none;
+  outline: none;
+  border: 0;
+  border-radius: 40px;
+  transition: .2s;
+}
+
+.edit_project_button:hover{
   background-color: rgb(68, 226, 189);
 }

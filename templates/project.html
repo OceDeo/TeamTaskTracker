@@ -21,7 +21,7 @@
     </div>
     <div class="proj_name"><i class="tasks_info">{% include 'tasks_info.jinja2' %}</i><i> tasks completed // {{project.project_name}} // {{project.start_date}} - {{project.deadline}}</i></div>
     <div class="project_all">
-        <h2>current tasks</h2>
+        <a href="/edit/{{project_id}}"><button class="edit_project_button">EDIT PROJECT DETAILS</button></a>
         <div class="add_new_task">
             <input id="new_task_id" type="text" name="add_task" placeholder="new task" />
             <button id="add_task_btn" class="add_task_button">add task</button>
@@ -30,6 +30,7 @@
             <ul class="tasks_list">
                 {% include 'task_list.jinja2' %}
             </ul>
+        </div>
         </div>
         <script>
             let btn = document.getElementById("add_task_btn");

@@ -28,9 +28,10 @@
             <div class="tasks_details">
                 <ul class="secondary_list">
                     {% for details in tasks_details %}
-                        <li><a class="task_details"><i class="nums">{{details}} TASKS COMPLETED</i></a></li>
+                        <li class="{{details}}"><a class="task_details"><i class="nums">{{details}}</i></a></li>
                     {% endfor %}
-                </ul>    
+
+                </ul>   
             </div>
 
         </body>

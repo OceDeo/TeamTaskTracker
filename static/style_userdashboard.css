@@ -43,14 +43,14 @@ body{
     transition: .2s;
   }
 
-  .side_panel i{
-    font-style: normal;
-  }
+.side_panel i{
+  font-style: normal;
+}
 
-  .side_panel li:hover a{
-    padding-left: 25px;
-    color: rgb(172, 204, 240);
-  }
+.side_panel li:hover a{
+  padding-left: 25px;
+  color: rgb(172, 204, 240);
+}
 
 .projects_all{
   position: fixed;
@@ -77,35 +77,35 @@ body{
   transition: 0.4s;
   }
 
-  .projects_all .proj_name{
-    position: relative;
-    top: 10%;
-    text-transform: uppercase;
-    color: rgb(90, 90, 90);
-    transition: .2s;
-    line-height: 30px;
-    font-weight: bold;
-    font-style: normal;
-  }
+.projects_all .proj_name{
+  position: relative;
+  top: 10%;
+  text-transform: uppercase;
+  color: rgb(90, 90, 90);
+  transition: .2s;
+  line-height: 30px;
+  font-weight: bold;
+  font-style: normal;
+}
 
-  .projects_all .proj_info{
-    position: relative;
-    top: 30%;
-    text-transform: uppercase;
-    color: rgb(90, 90, 90);
-    transition: .2s;
-    line-height: 30px;
-    font-weight: bold;
-    font-style: normal;
-  }
+.projects_all .proj_info{
+  position: relative;
+  top: 30%;
+  text-transform: uppercase;
+  color: rgb(90, 90, 90);
+  transition: .2s;
+  line-height: 30px;
+  font-weight: bold;
+  font-style: normal;
+}
 
-  .projects_all a:hover{
-    background-color: rgb(236, 236, 236);
-  }
+.projects_all a:hover{
+  background-color: rgb(236, 236, 236);
+}
 
-  .projects_all a:hover .proj_name{
-    top: 15%;
-  }
+.projects_all a:hover .proj_name{
+  top: 15%;
+}
 
 
 .tasks_details{
@@ -122,21 +122,30 @@ body{
   } 
 
 .tasks_details a{
-  background: transparent;
   display:block;
   width:400px;
   height:150px;
   border: 1px solid rgb(187, 187, 187);
+  border-radius: 10px;
   text-align: center;
   }
 
-  .nums{
-    position: relative;
-    top: 32%;
-    text-transform: uppercase;
-    color: rgb(141, 141, 141);
-    transition: .2s;
-    line-height: 30px;
-    font-weight: bold;
-    font-style: normal;
-  }
+.nums{
+  position: relative;
+  top: 32%;
+  text-transform: uppercase;
+  color: rgb(141, 141, 141);
+  transition: .2s;
+  line-height: 30px;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.tasks_details .completed a{
+  background: rgba(74, 228, 35, 0.3);
+
+}
+
+.tasks_details .completed .nums{
+  color: rgb(40, 143, 0);
+}

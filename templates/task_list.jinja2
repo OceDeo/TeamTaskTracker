@@ -1,9 +1,13 @@
 <div class="all_tasks">
 {% for task in proj_tasks %}
-    <button data-id='{{task.id}}' onclick='deleteTask(event)' class='delete_task'>DELETE</button>
-    <li class="task" data-id='{{task.id}}' onclick="status_task(event)">
-        <a data-id='{{task.id}}' class="{{task.task_status}}">{{task.task}}</a>
+    <li class="task" data-id='{{task.id}}' onclick="status_task(event); e.stopPropagation();">
+    <a data-id='{{task.id}}' class="{{task.task_status}}">{{task.task}}</a>
     </li>
+    <div class="del_div">
+    <li class="del_buttons">
+    <button data-id='{{task.id}}' onclick='deleteTask(event)' class='delete_task'>DELETE</button>
+    </li>
+    </div>
 {% endfor %}
 </div>
 

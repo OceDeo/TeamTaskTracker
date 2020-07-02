@@ -59,5 +59,4 @@ def finished_unfinished(project_id):
         num_all += 1
         if task.task_status == True:
             num_done += 1
-    task_details = f'{num_done}/{num_all}'
-    return task_details
+    return num_done, num_all

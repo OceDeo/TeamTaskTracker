@@ -51,6 +51,15 @@ def user_dashboard():
         create_user = 'Create User'
     else: #if user is not admin
         create_user = ''
+    projects = usr_s.proj_user(g.user.id)
+    projects_amount = len(projects)
+    tasks_total = 0
+    tasks_done = 0
+    for project in projects:
+        num_done, num_all = proj_s.finished_unfinished(project.id)
+        tasks_total += num_all
+        tasks_done += num_done
+    
     return render_template('user_dashboard.jinja2', create_user = create_user) # otherwise render userdashboard
 
 @app.route('/create_user', methods = ['GET', 'POST'])
@@ -76,7 +85,8 @@ def project_page(project_id):
         create_user = ''
     project = proj_s.specific_proj(project_id) #fetch project data
     tasks = proj_s.project_tasks(project_id) #fetch project tasks
-    tasks_details = proj_s.finished_unfinished(project_id)
+    num_done, num_all = proj_s.finished_unfinished(project_id)
+    tasks_details = f'{num_done}/{num_all}'
     if request.method == 'POST':
         task = request.form['add_task']
         task_status = request.form['task_status']
@@ -96,8 +106,19 @@ def my_projects():
     projects = usr_s.proj_user(g.user.id) # fetch projects for specific user
     tasks_details = []
     for project in projects:
-        task_details = proj_s.finished_unfinished(project.id)
-        tasks_details.append(task_details)
+        num_done, num_all = proj_s.finished_unfinished(project.id)
+        print(project.project_name)
+        print(f'{num_done}/{num_all}')
+        if num_all == 0 and num_done == 0:
+            tasks_details.append('0 Tasks assigned')
+        elif num_all == num_done:
+            task_info = 'completed'
+            tasks_details.append(task_info)
+        elif num_all > 0 and num_done >= 0:
+            task_info = f'{num_done}/{num_all} TASKS COMPLETED'
+            tasks_details.append(task_info)
+    print(tasks_details)
+
     return render_template('myprojects.jinja2', projects=projects, create_user = create_user, tasks_details = tasks_details)
 
 @app.route('/add_project', methods = ['GET', 'POST'])
@@ -150,8 +171,8 @@ def edit_project(project_id):
 @app.route('/api/projects/<project_id>/info_tasks')
 def task_info(project_id):
     time.sleep(.1)
-    tasks_details = proj_s.finished_unfinished(project_id)
-    print(tasks_details)
+    num_done, num_all = proj_s.finished_unfinished(project_id)
+    tasks_details = f'{num_done}/{num_all}'
     return render_template('tasks_info.jinja2', tasks_details = tasks_details)
 
 @app.route('/api/projects/<project_id>/add_task', methods = ['POST'])
