@@ -87,13 +87,26 @@ def project_page(project_id):
     tasks = proj_s.project_tasks(project_id) #fetch project tasks
     num_done, num_all = proj_s.finished_unfinished(project_id)
     tasks_details = f'{num_done}/{num_all}'
+    users = usr_s.all_users()
+    project_users_id = project.users
+    project_users = []
+    for user in users:
+        if str(user.id) in project_users_id:
+            project_users.append(user.username)
     if request.method == 'POST':
-        task = request.form['add_task']
-        task_status = request.form['task_status']
-        task_remove = request.form['remove_task']
-        proj_s.create_task(project_id,task) # create new task
+        user = request.form['users_all']
+        proj_s.add_proj_users(project_id, user)
         return redirect(url_for('project_page', project_id = project_id)) #return page with project id
-    return render_template('project.html', project = project, proj_tasks = tasks, project_id = project_id, create_user = create_user, tasks_details = tasks_details) # return page with project, tasks and id for js to receive
+    return render_template(
+    'project.html', 
+    project = project, 
+    proj_tasks = tasks, 
+    project_id = project_id, 
+    users = users,
+    create_user = create_user, 
+    tasks_details = tasks_details,
+    project_users = project_users
+    )
 
 @app.route('/myprojects', methods = ['GET'])
 def my_projects():
@@ -107,8 +120,6 @@ def my_projects():
     tasks_details = []
     for project in projects:
         num_done, num_all = proj_s.finished_unfinished(project.id)
-        print(project.project_name)
-        print(f'{num_done}/{num_all}')
         if num_all == 0 and num_done == 0:
             tasks_details.append('0 Tasks assigned')
         elif num_all == num_done:
@@ -117,7 +128,6 @@ def my_projects():
         elif num_all > 0 and num_done >= 0:
             task_info = f'{num_done}/{num_all} TASKS COMPLETED'
             tasks_details.append(task_info)
-    print(tasks_details)
 
     return render_template('myprojects.jinja2', projects=projects, create_user = create_user, tasks_details = tasks_details)
 
@@ -198,6 +208,11 @@ def task_status(project_id):
     proj_s.task_status(task_id)
     tasks = proj_s.project_tasks(project_id)
     return render_template('task_list.jinja2', proj_tasks = tasks)
+
+@app.route('/api/projects/<project_id>/delete_project')
+def delete_project(project_id):
+    proj_s.delete_project(project_id)
+    return redirect(url_for('my_projects'))
 
 @app.route('/logout')
 def logout():

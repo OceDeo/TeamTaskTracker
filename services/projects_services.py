@@ -20,7 +20,7 @@ def create_task(project_id, task):
     else:
         return dbs.TaskRepository.add_task(project_id, task)
 
-def check_proj_users(project_name, user_id):
+def add_proj_users(project_name, user_id):
     dbs.ProjectRepository.add_user_to_project(project_name, user_id)
 
 def specific_proj(project_id):
@@ -60,3 +60,6 @@ def finished_unfinished(project_id):
         if task.task_status == True:
             num_done += 1
     return num_done, num_all
+
+def delete_project(project_id):
+    dbs.ProjectRepository.delete_project(project_id)    

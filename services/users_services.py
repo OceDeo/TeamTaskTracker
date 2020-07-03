@@ -28,3 +28,7 @@ def proj_user(user_id):
 
 def user_by_id(session_id):
     return dbs.Users.query.filter_by(id=session_id).first()
+
+def all_users():
+    return dbs.UserRepository.user_list()
+

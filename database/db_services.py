@@ -35,6 +35,10 @@ class UserRepository:
         else:
             return False
 
+    def user_list():
+        users = db.session.query(Users).all()
+        return users 
+
                         ##### PROJECTS #####
 
 class Projects(db.Model): #works
@@ -89,7 +93,7 @@ class ProjectRepository:
         return project
 
     def user_projects(user_id):
-        projects = Projects.query.filter(Projects.users.contains(str(user_id))).all()
+        projects = Projects.query.filter(Projects.users.contains(str(user_id))).order_by(desc(Projects.id)).all()
         return projects
 
     def edit_project(project_id, project_name, start_date, deadline):
@@ -101,6 +105,11 @@ class ProjectRepository:
         if deadline != None:
             project.deadline = deadline
         db.session.add(project)
+        db.session.commit()
+
+    def delete_project(project_id):
+        project = Projects.query.filter_by(id=project_id).first()
+        db.session.delete(project)
         db.session.commit()
 
                         ##### TASKS #####

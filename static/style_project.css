@@ -189,9 +189,93 @@ input{
   outline: none;
   border: 0;
   border-radius: 40px;
+  margin-bottom: 10px;
   transition: .2s;
 }
 
 .edit_project_button:hover{
   background-color: rgb(68, 226, 189);
+}
+
+.delete_project_button{
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  width: 20%;
+  float: right;
+  height: 30px;
+  background-color: #2FD4AE;
+  box-shadow: none;
+  outline: none;
+  color: rgb(83, 83, 83);
+  border: 0;
+  border-radius: 40px;
+  margin-bottom: 10px;
+  transition: .2s;
+}
+
+.delete_project_button:hover{
+  background-color: rgb(68, 226, 189);
+}
+
+.delete_project_button a{
+  color: rgb(83, 83, 83);
+}
+
+.add_user_button{
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  width: 100px;
+  height: 30px;
+  background-color: #2FD4AE;
+  box-shadow: none;
+  outline: none;
+  color: rgb(83, 83, 83);
+  border: 0;
+  border-radius: 40px;
+  margin-bottom: 10px;
+  transition: .2s;
+}
+
+.add_user_button:hover{
+  background-color: rgb(68, 226, 189);
+}
+.project_users{
+  width: 100%;
+  background-color: rgb(241, 241, 241);
+  height: 30px;
+  padding: 5px;
+  border-radius: 40px;
+}
+
+.project_users .user{
+  float: left;
+  margin-left: 5px;
+  cursor: default;
+  text-align: center;
+  min-width: 40px;
+  padding: 5px;
+  height: 20px;
+  background-color: rgb(115, 236, 208);
+  box-shadow: none;
+  outline: none;
+  border: 0;
+  border-radius: 40px;
+  color: rgb(83, 83, 83);
+}
+
+.project_users .user_info{
+  float: left;
+  margin-left: 5px;
+  cursor: default;
+  text-align: center;
+  min-width: 40px;
+  padding: 5px;
+  height: 20px;
+  box-shadow: none;
+  outline: none;
+  border: 0;
+  border-radius: 40px;
+  color: rgb(83, 83, 83);
 }

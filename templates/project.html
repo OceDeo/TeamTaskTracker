@@ -22,9 +22,25 @@
     <div class="proj_name"><i class="tasks_info">{% include 'tasks_info.jinja2' %}</i><i> tasks completed // {{project.project_name}} // {{project.start_date}} - {{project.deadline}}</i></div>
     <div class="project_all">
         <a href="/edit/{{project_id}}"><button class="edit_project_button">EDIT PROJECT DETAILS</button></a>
+        <button class="delete_project_button"><a href="/api/projects/{{project_id}}/delete_project" onclick='delete_project_prompt(); return false;'>DELETE PROJECT</a></button>
+        <form method="POST">
+            <select name="users_all" id="users_all">
+                {%for user in users %}
+                    <option value="{{user.id}}">{{user.username}}</option>
+                {% endfor %}
+            </select>
+            <button class="add_user_button" type="submit">Add user</button>
+        </form>
+        <ul class="project_users">
+            <li class="user_info">USERS :</li>
+            {% for user in project_users %}
+            <li class="user">{{user}}</li>
+            {% endfor %}
+        </ul>
         <div class="add_new_task">
             <input id="new_task_id" type="text" name="add_task" placeholder="new task" />
             <button id="add_task_btn" class="add_task_button">add task</button>
+
         </div>
         <div class="tasks">
             <ul class="tasks_list">
@@ -124,6 +140,15 @@
     document.querySelector("#add_task_btn").click(); 
     event.preventDefault(); 
 });
+
+function delete_project_prompt() { 
+ if (window.confirm('Really want to delete this project?'))
+ {
+   window.location.href = '/api/projects/{{project_id}}/delete_project';
+ }
+}
+
+
 
         </script>
 </body>
